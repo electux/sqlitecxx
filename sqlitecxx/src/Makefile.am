@@ -10,7 +10,8 @@ AM_CPPFLAGS = \
 AM_CFLAGS = \
 	-std=c++2a
 	-Wall \
-	-g
+	-g \
+	-I $(pwd)/
 
 bin_PROGRAMS = sqlitecxx
 

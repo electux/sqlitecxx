@@ -20,8 +20,7 @@
 #ifndef REAL_H
 #define REAL_H
 
-#include <iostream>
-#include "verbose.h" 
+#include <base.h>
 
 #define SQLITECXX_REAL "sqlitecxx::real::"
 
@@ -31,12 +30,7 @@
  * @tparam T - float | double.
  */
 template <class T>
-class Real final {
-
-    /**
-     * @brief Payload for Real<T> SQLite data.
-     */
-    T payload;
+class Real final : Base<T> {
 
   public:
     /**
@@ -48,7 +42,7 @@ class Real final {
      * @brief Construct a new Real<T> object.
      * @param payload value for floating data.
      */
-    explicit Real(T payload) : payload{payload} {
+    explicit Real(T payload) : Base<T>(payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_REAL << __func__;
       std::cout << " user defined cstor " << this << std::endl;
@@ -59,7 +53,7 @@ class Real final {
      * @brief Copy Constructor for a new Real<T> object.
      * @param source reference to Real<T> object for copy. 
      */
-    Real(Real<T>& source) : payload{source.payload} {
+    Real(Real<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_REAL << __func__ << " Real<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -70,7 +64,7 @@ class Real final {
      * @brief Copy Constructor for a new Real<T> object.
      * @param source const reference to Real<T> object for copy. 
      */
-    Real(const Real<T>& source) : payload{source.payload} {
+    Real(const Real<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_REAL << __func__ << " const Real<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -92,31 +86,6 @@ class Real final {
     // Getters and setters
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @brief Getter for payload of Real<T> data.
-     * @return T represent floating data.
-     */
-    T& get() {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_REAL << __func__;
-      std::cout << " at " << this << std::endl;
-#endif
-      return this->payload;
-    }
-
-    /**
-     * @brief Setter for payload of Real<T> data.
-     * @param payload represent floating data.
-     */
-    void set(T payload) {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_REAL << __func__;
-      std::cout << " arg : " << payload;
-      std::cout << " at " << this << std::endl;
-#endif
-      this->payload = payload;
-    }
 
     /**
      * @brief Get the sql type object

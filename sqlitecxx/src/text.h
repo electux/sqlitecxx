@@ -20,8 +20,7 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include <iostream>
-#include "verbose.h" 
+#include <base.h>
 
 #define SQLITECXX_TEXT "sqlitecxx::text::"
 
@@ -30,12 +29,7 @@
  * @tparam T - std::string | std::string_view.
  */
 template <class T>
-class Text final {
-
-    /**
-     * @brief Payload for Text<T> SQLite data.
-     */
-    T payload;
+class Text final : Base<T> {
 
   public:
     /**
@@ -47,7 +41,7 @@ class Text final {
      * @brief Construct a new Text<T> object.
      * @param payload value for text data.
      */
-    explicit Text(T payload) : payload{payload} {
+    explicit Text(T payload) : Base<T>(payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_TEXT << __func__;
       std::cout << " user defined cstor " << this << std::endl;
@@ -58,7 +52,7 @@ class Text final {
      * @brief Copy Constructor for a new Text<T> object.
      * @param source reference to Text<T> object for copy. 
      */
-    Text(Text<T>& source) : payload{source.payload} {
+    Text(Text<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_TEXT << __func__ << " Text<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -69,7 +63,7 @@ class Text final {
      * @brief Copy Constructor a new Text<T> object.
      * @param source const reference to Text<T> object for copy. 
      */
-    Text(const Text<T>& source) : payload{source.payload} {
+    Text(const Text<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_TEXT << __func__ << " const Text<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -91,31 +85,6 @@ class Text final {
     // Getters and setters
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @brief Getter for payload of Text<T> data.
-     * @return T represent reference to text data.
-     */
-    T& get() {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_TEXT << __func__;
-      std::cout << " at " << this << std::endl;
-#endif
-      return this->payload;
-    }
-
-    /**
-     * @brief Setter for payload of Text<T> data.
-     * @param payload represent text data.
-     */
-    void set(T payload) {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_TEXT << __func__;
-      std::cout << " arg : " << payload;
-      std::cout << " at " << this << std::endl;
-#endif
-      this->payload = payload;
-    }
 
     /**
      * @brief Get the sql type object.
