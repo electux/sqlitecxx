@@ -21,8 +21,7 @@
 #define INTEGER_H
 
 #include <cstdint>
-#include <iostream>
-#include "verbose.h"
+#include <base.h>
 
 #define SQLITECXX_INTEGER "sqlitecxx::integer::"
 
@@ -32,12 +31,7 @@
  * @tparam T - int8_t | int16_t | int32_t | int64_t | short | int | long.
  */
 template <class T>
-class Integer final {
-
-    /**
-     * @brief Payload for Integer<T> SQLite data.
-     */
-    T payload;
+class Integer final : Base<T> {
 
   public:
     /**
@@ -49,7 +43,7 @@ class Integer final {
      * @brief Construct a new Integer<T> object.
      * @param payload value for integral data.
      */
-    explicit Integer(T payload) : payload{payload} {
+    explicit Integer(T payload) : Base<T>(payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_INTEGER << __func__;
       std::cout << " user defined cstor " << this << std::endl;
@@ -60,7 +54,7 @@ class Integer final {
      * @brief Copy Constructor for a new Integer<T> object.
      * @param source reference to Integer <T> object for copy. 
      */
-    Integer(Integer<T>& source) : payload{source.payload} {
+    Integer(Integer<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_INTEGER << __func__ << " Integer<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -71,7 +65,7 @@ class Integer final {
      * @brief Copy Constructor for a new Integer<T> object.
      * @param source const reference to Integer<T> object for copy. 
      */
-    Integer(const Integer<T>& source) : payload{source.payload} {
+    Integer(const Integer<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_INTEGER << __func__ << " const Integer<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -93,31 +87,6 @@ class Integer final {
     // Getters and setters
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @brief Getter for payload of Integer<T> data.
-     * @return T represent integral datatype.
-     */
-    T& get() {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_INTEGER << __func__;
-      std::cout << " at " << this << std::endl;
-#endif
-      return this->payload;
-    }
-
-    /**
-     * @brief Setter for payload of Integer<T> data.
-     * @param payload represent integral data.
-     */
-    void set(T payload) {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_INTEGER << __func__;
-      std::cout << " arg : " << payload;
-      std::cout << " at " << this << std::endl;
-#endif
-      this->payload = payload;
-    }
 
     /**
      * @brief Get the sql type object.

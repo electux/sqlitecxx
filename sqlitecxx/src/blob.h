@@ -20,8 +20,7 @@
 #ifndef BLOB_H
 #define BLOB_H
 
-#include <iostream>
-#include "verbose.h" 
+#include <base.h>
 
 #define SQLITECXX_BLOB "sqlitecxx::blob::"
 
@@ -30,12 +29,7 @@
  * @tparam T - int8_t | char.
  */
 template <class T>
-class Blob final {
-
-    /**
-     * @brief Payload for Blob<T> SQLite data.
-     */
-    T payload;
+class Blob final : Base<T> {
 
   public:
     /**
@@ -47,7 +41,7 @@ class Blob final {
      * @brief Construct a new Blob<T> object.
      * @param payload value for BLOB data.
      */
-    explicit Blob(T payload) : payload{payload} {
+    explicit Blob(T payload) : Base<T>(payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_BLOB << __func__;
       std::cout << " user defined cstor " << this << std::endl;
@@ -58,7 +52,7 @@ class Blob final {
      * @brief Copy Constructor for a new Blob<T> object.
      * @param source reference to Blob<T> object for copy. 
      */
-    Blob(Blob<T>& source) : payload{source.payload} {
+    Blob(Blob<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_BLOB << __func__ << " Blob<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -69,7 +63,7 @@ class Blob final {
      * @brief Copy Constructor for a new Blob<T> object.
      * @param source const reference to Blob<T> object for copy. 
      */
-    Blob(const Blob<T>& source) : payload{source.payload} {
+    Blob(const Blob<T>& source) : Base<T>(source.payload) {
 #if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
       std::cout << SQLITECXX_BLOB << __func__ << " const Blob<T>";
       std::cout << " copy cstor " << this << std::endl;
@@ -91,31 +85,6 @@ class Blob final {
     // Getters and setters
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @brief Getter for payload of Blob<T> data.
-     * @return T represent BLOB datatype.
-     */
-    T& get() {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_BLOB << __func__;
-      std::cout << " at " << this << std::endl;
-#endif
-      return this->payload;
-    }
-
-    /**
-     * @brief Setter for payload of Blob<T> data.
-     * @param payload represent BLOB data.
-     */
-    void set(T payload) {
-#if SQLITECXX_VERBOSE == SQLITECXX_VERBOSE_ENABLED
-      std::cout << SQLITECXX_BLOB << __func__;
-      std::cout << " arg : " << payload;
-      std::cout << " at " << this << std::endl;
-#endif
-      this->payload = payload;
-    }
 
     /**
      * @brief Get the sql type object
